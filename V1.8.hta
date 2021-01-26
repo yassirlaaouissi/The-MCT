@@ -1,0 +1,184 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<title>THE MCT</title>
+		<HTA:APPLICATION
+		APPLICATIONNAME="The MCT"
+		ID="The MCT - Sebastiaan, Taseen en Yassir"
+		VERSION="1.8"
+		MAXIMIZEBUTTON="yes"
+		SCROLL="no"/>
+	</head>
+
+<!-- Dit is de style (duh) zo ver het werkt... -->
+	<style type="text/css">
+		.body{
+			margin: 0;
+			padding: 0;
+			top: 0;
+			height: 100vh;
+			width: 100vh;
+/*verander deze link voor een andere achtergrond (let op niet alle afbeeldingen werken!)
+			background-image: url("");
+		    background-position: center;
+		    background-repeat: no-repeat;
+		    background-size: cover;
+*/
+		}
+	</style>
+
+<!-- Dit is de maincipher, worth the research... -->
+	<script language="VBScript">
+	    'Dit Creërt de application'
+	    Sub Window_OnLoad
+	    Dim width,height
+	    width=900
+	    height=720
+	    self.ResizeTo width,height
+
+	    'Dit checkt of alles is ingevuld'
+	    End Sub
+	    Function Validate(ID)
+	    On Error Resume Next
+	    Key = Int(pass.value)
+	    If (pass.value = "") Then
+	    X = MsgBox("You have to enter your password..!", 48, "Error")
+	    Else If (tamsg.value = "") Then
+	    X = MsgBox("Enter the text to encrypt or decrypt!", 48, "ERROR!")
+	    Else
+	    Junk = SetTimeOut(KEYS(ID), 1)
+	    End If
+	    End If
+
+
+	    End Function
+	    Function KEYS(ID)
+	    text = pass.value
+	    code = 0
+	    Do Until text = ""
+	    code = ((Asc(Left(text, 1)))+code)
+	    text = Replace(text, Left(text, 1), "", "1", "1")
+	    Loop
+	    code = code Mod 255
+	    akey.value = code
+	    Junk = SetTimeOut(ID, 1)
+	    End Function
+
+	    'Dit zorgt voor de encryptie'
+	    Function Encrypt
+	    Alpha = Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+	    text = tamsg.value
+	    code = ""
+	    key = Int(akey.value)
+	    Do Until text = ""
+	    cnum = Asc(Left(text, 1))
+	    cnum = (cnum+key) Mod 255
+	    num = cnum Mod 26
+	    count = 0
+	    tst = num
+	    Do Until tst = cnum
+	    tst = tst+26
+	    count = count+1
+	    Loop
+	    code = code & Alpha(num) & count
+	    text = Replace(text, Left(text, 1), "", "1", "1")
+	    Loop
+	    tamsg.value = code
+	    End Function
+
+	    'Dit zorgt voor de decryptie'
+	    Function Decrypt
+	    Alpha = Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+	    text = tamsg.value
+	    code = ""
+	    key = Int(akey.value)
+	    Do Until text = ""
+	    lttr = Left(text, 2)
+	    num = Asc(Left(lttr, 1))-65
+	    chk = Right(lttr, 1)
+	    count = 0
+	    'Dit zorgt voor de foutmelding wanneer je teveel decrypt'
+	    Do Until count = Int(chk)
+	    num = num+26
+	    count = count+1
+	    Loop
+	    num = num-key
+	    Do While num <= 0
+	    num = num+255
+	    Loop
+	    Code = code & Chr(num)
+	    text = Replace(text, Left(text, 2), "", "1", "1")
+	    Loop
+	    tamsg.value = code
+	    End Function
+	</script>
+
+	<body class="body" bgcolor="white">
+		<input type="hidden" id="akey"> <span title=""> 
+				
+				<table align="center" width="400">
+					
+<!-- dit is de titel dus niet de header, remember dit is 1 image-->
+				<hr color="black">
+				<center>
+						 <img id="title" alt="font1" src="http://h16sgroen.helenparkhurst.net/images/font1.png">
+				</center>
+				<hr color="black">
+
+<!-- Tekstvak groot-->	
+						<tr> 
+							<td align="center">
+								<span title="Enter your Full message here">
+									<textarea id="tamsg" cols="80" rows="15" ></textarea>
+								</span>
+							</td> 
+						</tr>
+					
+<!-- Tekstvak klein, voor het wachtwoord-->
+						&nbsp;&nbsp;&nbsp;&nbsp; 
+					<td color="black" align="center" style="font-family: Book Antiqua; font-size:18;">
+							<hr color="black"> Wachtwoord: &nbsp;
+								
+								<br>
+								<span title="">
+
+									<input type="text" id="pass">								
+								</span> 
+	
+						<br><br>
+						
+<!-- Klik hier om te encrypten -->
+						<span align="center" title="Click Here to Encrypt your Message"> 
+							<input align="center" style="width: 170px; height:35px; 
+							color: white; background-color: black; 
+							font-family:Book Antiqua; font-size:17px;" type="button" 
+							Value="Encrypt" id="btnenc" onClick="Validate('Encrypt')" 
+							onmouseover="btnenc.style.background='#102030'" 
+							onmouseout="btnenc.style.background='black'"> 
+						</span> 
+						
+				
+					
+<!-- Klik hier om te decrypten -->
+						<span align="center" title="Click Here to Decrypt your Message"> 
+							<input align="center" style="width: 170px; height:35px; color: white;
+							background-color: black; font-family: Book Antiqua; 
+							font-size:17px;" type="button" Value="Decrypt" id="btndec" 
+							onClick="Validate('Decrypt')" onmouseover="btndec.style.background='#102030'" 
+							onmouseout="btndec.style.background='black'"> 
+						</span>
+					</td>  
+					
+<!-- De footer -->
+					<tr> 
+						<td align="center"><hr color="black">
+							<span title="PWS 2018" style="font-size: 13px; font-family:Book Antiqua;">&copy; Taseen, Sebastiaan en Yassir - 2018 PWS </span>
+						</td> 
+					</tr> 
+				</table> 
+	</body> 
+	
+	
+	<!-- K5Z5H5V6Y3J7L6D7D7T6C7Y3U6T6U6Y3G7F7T6W6P6Y3V6W6Z6Z6E7K7L6V6A5R4F3C3 -->
+	
+</html>

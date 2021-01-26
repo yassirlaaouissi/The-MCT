@@ -1,0 +1,185 @@
+<html>
+	<head>
+		<title>The Sovietoblaster - PWS 2018</title>
+			<HTA:APPLICATION
+			APPLICATIONNAME="The sovietoblaster"
+			ID="The sovietoblaster - Sebastiaan, Taseen en Yassir"
+			VERSION="1.1"
+			MAXIMIZEBUTTON="yes"
+			SCROLL="yes"/>
+	</head>
+
+	<style> 
+	td { 
+	color: #20C20E; 
+	}
+	
+	font {
+	color: #20C20E;
+	}
+	
+	caption { 
+	color: #20C20E; 
+	}
+	
+	body { 
+	width:100%;
+	font-family: Arial; 
+	background-color: #242323; 
+	color: #242323; 
+	}
+	
+	input { 
+	background-color: black; 
+	color: #20C20E; 
+	}
+	
+	textarea { 
+	background-color: black;
+	color: #20C20E; 
+	}
+	
+	</style>
+
+	<script language="VBScript">
+	Sub Window_OnLoad
+	Dim width,height
+	width=1280
+	height=720
+	self.ResizeTo width,height
+	End Sub
+	Function Validate(ID)
+	On Error Resume Next
+	Key = Int(pass.value)
+	If (pass.value = "") Then
+	X = MsgBox("You have to enter your password..!", 48, "Error")
+	Else If (tamsg.value = "") Then
+	X = MsgBox("Enter the text to encrypt or decrypt!", 48, "ERROR!")
+	Else
+	Junk = SetTimeOut(KEYS(ID), 1)
+	End If
+	End If
+	End Function
+	Function KEYS(ID)
+	text = pass.value
+	code = 0
+	Do Until text = ""
+	code = ((Asc(Left(text, 1)))+code)
+	text = Replace(text, Left(text, 1), "", "1", "1")
+	Loop
+	code = code Mod 255
+	akey.value = code
+	Junk = SetTimeOut(ID, 1)
+	End Function
+	Function Encrypt
+	Alpha = Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+	text = tamsg.value
+	code = ""
+	key = Int(akey.value)
+	Do Until text = ""
+	cnum = Asc(Left(text, 1))
+	cnum = (cnum+key) Mod 255
+	num = cnum Mod 26
+	count = 0
+	tst = num
+	Do Until tst = cnum
+	tst = tst+26
+	count = count+1
+	Loop
+	code = code & Alpha(num) & count
+	text = Replace(text, Left(text, 1), "", "1", "1")
+	Loop
+	tamsg.value = code
+	End Function
+	Function Decrypt
+	Alpha = Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+	text = tamsg.value
+	code = ""
+	key = Int(akey.value)
+	Do Until text = ""
+	lttr = Left(text, 2)
+	num = Asc(Left(lttr, 1))-65
+	chk = Right(lttr, 1)
+	count = 0
+	Do Until count = Int(chk)
+	num = num+26
+	count = count+1
+	Loop
+	num = num-key
+	Do While num <= 0
+	num = num+255
+	Loop
+	Code = code & Chr(num)
+	text = Replace(text, Left(text, 2), "", "1", "1")
+	Loop
+	tamsg.value = code
+	End Function
+	</script>
+	
+	<body bgcolor="white"> 
+		<input type="hidden" id="akey"> <span title=""> 
+				
+				<span title="The Sovietoblaster">
+					<marquee color="#20C20E" bgcolor="black" style="font-family= Book Antiqua;"><font color="red"> Gemaakt door: 
+						<font color="#20C20E"> Taseen Khan, Sebastiaan Groen en Yassir Laaouissi</font>
+					</marquee> 
+				</span> 
+				
+				<table align="center" width="400">
+					
+						<caption style="font-family:Book Antiqua; font-size:20;">
+							<hr color="#20C20E">
+								<b>The Sovietoblaster</b>
+							<hr color="#20C20E">
+						</caption>
+						
+						<tr> 
+							<td align="center">
+								<span title="Enter your Full message here">
+									<textarea id="tamsg" cols="80" rows="15"></textarea>
+								</span>
+							</td> 
+						</tr>
+					
+						&nbsp;&nbsp;&nbsp;&nbsp; 
+					<td color="black" align="center" style="font-family: Book Antiqua; font-size:18;">
+							<hr color="#20C20E"> Wachtwoord: &nbsp;
+								<span title="Typ hier het wachtwoord in dat U wil gebruiken als beveiliging voor de versleuteling van uw data.">
+									
+									<br>
+									<input type="password" id="pass">
+								</span> 
+
+						<br><br><br>
+						
+
+						<span align="center" title="Click Here to Encrypt your Message"> 
+							<input align="center" style="width: 170px; height:23px; 
+							color: white; background-color: #203040; 
+							font-family:Book Antiqua;" type="button" 
+							Value="Encrypt" id="btnenc" onClick="Validate('Encrypt')" 
+							onmouseover="btnenc.style.background='#102030'" 
+							onmouseout="btnenc.style.background='#203040'"> 
+						</span> 
+						
+						<br><br><br>
+						
+						<span align="center" title="Click Here to Decrypt your Message"> 
+							<input align="center" style="width: 170px; height:23px; color: white;
+							background-color: #203040; font-family: Book Antiqua; 
+							font-size:13;" type="button" Value="Decrypt" id="btndec" 
+							onClick="Validate('Decrypt')" onmouseover="btndec.style.background='#102030'" 
+							onmouseout="btndec.style.background='#203040'"> 
+						</span>
+					</td>  
+					
+					
+					<tr> 
+						<td align="center"><hr color="#20C20E">
+							<span title="PWS 2018" style="font-size: 13px; font-family:Book Antiqua;">&copy; Taseen, Sebastiaan en Yassir - 2018 PWS </span>
+						</td> 
+					</tr> 
+				</table> 
+	</body> 
+</html>
+

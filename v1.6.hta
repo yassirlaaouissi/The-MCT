@@ -1,0 +1,260 @@
+<html>
+	<head>
+		<title>The MCT - PWS 2018</title>
+
+			<HTA:APPLICATION
+			APPLICATIONNAME="The MCT"
+			ID="The MCT - Sebastiaan, Taseen en Yassir"
+			VERSION="1.6"
+			MAXIMIZEBUTTON="yes"
+			SCROLL="no"/>
+	</head>
+
+	<!-- Dit beslist de style van de textforms, tekst, body en die coole lijntjes   -->
+	<style>
+	
+    td { 
+    color: black; 
+    }
+
+    font {
+    color: white;
+    }
+
+    caption { 
+    color: white; 
+    }
+
+    body { 
+    width:100%;
+    font-family: Arial; 
+    background-color: white;
+    color: #242323; 
+    }
+
+    input { 
+    background-color: black; 
+    color: white; 
+    }
+
+    textarea { 
+    background-color: black;
+    color: white; 
+    }
+	
+	img {
+    display: block;
+    margin: 0 auto;
+    }
+	
+	</style>
+
+	
+	<!-- Dit is de maincipher, worth the research... -->
+	<script language="VBScript">
+    'Dit Creërt de application'
+    Sub Window_OnLoad
+    Dim width,height
+    width=900
+    height=720
+    self.ResizeTo width,height
+
+    'Dit checkt of alles is ingevuld'
+    End Sub
+    Function Validate(ID)
+    On Error Resume Next
+    Key = Int(pass.value)
+    If (pass.value = "") Then
+    X = MsgBox("You have to enter your password..!", 48, "Error")
+    Else If (tamsg.value = "") Then
+    X = MsgBox("Enter the text to encrypt or decrypt!", 48, "ERROR!")
+    Else
+    Junk = SetTimeOut(KEYS(ID), 1)
+    End If
+    End If
+
+
+    End Function
+    Function KEYS(ID)
+    text = pass.value
+    code = 0
+    Do Until text = ""
+    code = ((Asc(Left(text, 1)))+code)
+    text = Replace(text, Left(text, 1), "", "1", "1")
+    Loop
+    code = code Mod 255
+    akey.value = code
+    Junk = SetTimeOut(ID, 1)
+    End Function
+
+    'Dit zorgt voor de encryptie'
+    Function Encrypt
+    Alpha = Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+    text = tamsg.value
+    code = ""
+    key = Int(akey.value)
+    Do Until text = ""
+    cnum = Asc(Left(text, 1))
+    cnum = (cnum+key) Mod 255
+    num = cnum Mod 26
+    count = 0
+    tst = num
+    Do Until tst = cnum
+    tst = tst+26
+    count = count+1
+    Loop
+    code = code & Alpha(num) & count
+    text = Replace(text, Left(text, 1), "", "1", "1")
+    Loop
+    tamsg.value = code
+    End Function
+
+    'Dit zorgt voor de decryptie'
+    Function Decrypt
+    Alpha = Array("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z")
+    text = tamsg.value
+    code = ""
+    key = Int(akey.value)
+    Do Until text = ""
+    lttr = Left(text, 2)
+    num = Asc(Left(lttr, 1))-65
+    chk = Right(lttr, 1)
+    count = 0
+    'Dit zorgt voor de foutmelding wanneer je teveel decrypt'
+    Do Until count = Int(chk)
+    num = num+26
+    count = count+1
+    Loop
+    num = num-key
+    Do While num <= 0
+    num = num+255
+    Loop
+    Code = code & Chr(num)
+    text = Replace(text, Left(text, 2), "", "1", "1")
+    Loop
+    tamsg.value = code
+    End Function
+	</script>
+	
+	<body bgcolor="white"> 
+		<input type="hidden" id="akey"> <span title=""> 
+				
+				<table align="center" width="400">
+					
+				<!-- dit is de titel dus niet de header, remember dit is 1 image-->
+				<hr color="black">
+				<center>
+						 <img id="title" alt="font1" src="data:image/png;base64,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">
+</center>
+				<hr color="black">
+					<!-- Tekstvak groot-->	
+						<tr> 
+							<td align="center">
+								<span title="Enter your Full message here">
+									<textarea id="tamsg" cols="80" rows="15" ></textarea>
+								</span>
+							</td> 
+						</tr>
+					
+					<!-- Tekstvak klein, voor het wachtwoord-->
+						&nbsp;&nbsp;&nbsp;&nbsp; 
+					<td color="black" align="center" style="font-family: Book Antiqua; font-size:18;">
+							<hr color="black"> Wachtwoord: &nbsp;
+								
+								<br>
+								<span title="">
+
+									<input type="text" id="pass">								
+								</span> 
+	
+						<br><br>
+						
+					<!-- Klik hier om te encrypten -->
+						<span align="center" title="Click Here to Encrypt your Message"> 
+							<input align="center" style="width: 170px; height:35px; 
+							color: white; background-color: black; 
+							font-family:Book Antiqua; font-size:17px;" type="button" 
+							Value="Encrypt" id="btnenc" onClick="Validate('Encrypt')" 
+							onmouseover="btnenc.style.background='#102030'" 
+							onmouseout="btnenc.style.background='black'"> 
+						</span> 
+						
+				
+					
+					<!-- Klik hier om te decrypten -->
+						<span align="center" title="Click Here to Decrypt your Message"> 
+							<input align="center" style="width: 170px; height:35px; color: white;
+							background-color: black; font-family: Book Antiqua; 
+							font-size:17px;" type="button" Value="Decrypt" id="btndec" 
+							onClick="Validate('Decrypt')" onmouseover="btndec.style.background='#102030'" 
+							onmouseout="btndec.style.background='black'"> 
+						</span>
+					</td>  
+					
+					<!-- De footer -->
+					<tr> 
+						<td align="center"><hr color="black">
+							<span title="PWS 2018" style="font-size: 13px; font-family:Book Antiqua;">&copy; Taseen, Sebastiaan en Yassir - 2018 PWS </span>
+						</td> 
+					</tr> 
+				</table> 
+	</body> 
+	
+	
+	<!-- K5Z5H5V6Y3J7L6D7D7T6C7Y3U6T6U6Y3G7F7T6W6P6Y3V6W6Z6Z6E7K7L6V6A5R4F3C3 -->
+	
+</html>
+
